@@ -43,7 +43,7 @@ def get_workspace_sidebar_items():
 	order_by = "sequence_id asc"
 	fields = ["name", "label", 'color',  "module", "icon"]
 	all_pages = frappe.get_all(
-		"Home Page", fields=fields, filters=filters, order_by=order_by, ignore_permissions=True
+		"Home Page", fields=fields, filters=filters, order_by=order_by, ignore_permissions=True,
 	)
 	pages = []
 	private_pages = []
@@ -70,8 +70,11 @@ def get_workspace_sidebar_items():
 def app_page():
 	# data = get_data("2022-1-11" , "2022-11-20")
 	# frappe.errprint(get_balance_shet())
+
 	data = get_workspace_sidebar_items()['pages']
-	frappe.errprint(data)
+	# frappe.errprint(data)
+	data = sorted(data, key=lambda x: x['label'])  # ascending by label
+
 	# return frappe.render_template("rasiin_design/api/templates/app_page.html", {"data" : data})  , "test"
 	return frappe.render_template("rasiin_design/api/templates/new_app_page.html", {"data" : data})  , "test"
 	# return frappe.render_template("anfac_retail.anfac_retail.page.dashboard_page.dashboard_page.html", {"data" : data})
